@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        
+        /* Center the header title */
+        .header {
+            text-align: center;
+            background-color: #007bff; /* Blue background color */
+            color: #fff; /* White text color */
+            padding: 20px 0; /* Add padding */
+            border-bottom: 2px solid #0056b3; /* Darker blue border */
+            position: relative; /* Position relative for absolute positioning of additional elements */
+        }
+
+        /* Style header title */
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase; /* Convert text to uppercase */
+            letter-spacing: 2px; /* Add letter spacing */
+            margin-bottom: 10px;
+        }
+
+        /* Additional elements under the title */
+        .additional-elements {
+            position: absolute;
+            left: 50%; /* Align to the middle of the header */
+            transform: translateX(-50%); /* Adjust horizontal alignment */
+            bottom: 0; /* Align to the bottom of the header */
+            margin-bottom: -10px;
+            display: flex; /* Use flexbox for horizontal alignment */
+        }
+
+        .additional-elements p {
+            margin-left: 20px; /* Add margin between elements */
+            color: #fff; /* White text color */
+            cursor: pointer; /* Add cursor pointer */
+        }
+
+        .additional-elements p:last-child {
+            margin-right: 0; /* Remove margin from the last element */
+        }
+
+        .additional-elements p:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Main content container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading styling */
+        h1, h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Image styling */
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* Make footer take the whole width */
+            background-color: #f8f9fa; /* Light gray background color */
+            color: #343a40; /* Dark text color */
+            padding: 10px 20px; /* Add padding */
+            border-top: 1px solid #dee2e6; /* Light gray border top */
+            border-left: 1px solid #dee2e6; /* Light gray border left */
+            border-radius: 0; /* Remove border radius */
+        }
+
+        .sentiment {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        footer p {
+            margin: 5px 0; /* Add margin for spacing between paragraphs */
+        }
+
+        /* Style the image in the footer */
+        footer img {
+            position: absolute;
+            bottom: 10px;
+            right: 50px;
+            width: 50px; /* Adjust width as needed */
+            height: auto;
+        }
+
+        .confusion-matrix {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .confusion-matrix img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Misclassified table styling */
+        .misclassified-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .misclassified-table th,
+        .misclassified-table td {
+            border: 1px solid #ddd; /* Add border to table cells */
+            padding: 8px; /* Add padding to table cells */
+            text-align: left; /* Align text to the left */
+        }
+
+        .misclassified-table th {
+            background-color: #f2f2f2; /* Light gray background color for table headers */
+        }
+
+        .misclassified-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light gray background color for even rows */
+        }
+
+        .misclassified-table tbody tr:hover {
+            background-color: #ddd; /* Darker background color on hover */
+        }
+
+        .misclassified-table th,
+        .misclassified-table td {
+            font-size: 14px; /* Adjust font size */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Data Mining Techniques For Sentiment Analysis</h1>
+        <!-- Additional elements below the title -->
+        <div class="additional-elements">
+            <a href="/"><p>Home</p></a>
+            <a href="/csv.html"><p>Upload CSV File</p></a>
+            <a href="/english.html"><p>English Sentiment Analysis</p></a>
+            <a href="/arabic.html"><p>Arabic Sentiment Analysis</p></a>
+        </div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="container">
+        <h1>Analysis Results</h1>
+        
+        <h2>Number of Positive and Negative Reviews</h2>
+        <img src="data:image/png;base64,{{ plots[0] }}" alt="Number of Positive and Negative Reviews">
+
+        <h2>Distribution of Sentiment Scores</h2>
+        <img src="data:image/png;base64,{{ plots[1] }}" alt="Distribution of Sentiment Scores">
+
+        <h2>Sentiment Scores of Reviews</h2>
+        <img src="data:image/png;base64,{{ plots[2] }}" alt="Sentiment Scores of Reviews">
+
+        <div class="confusion-matrix">
+            <h2>Confusion Matrix</h2>
+            <img src="data:image/png;base64,{{ confusion_matrix_plot }}" alt="Confusion Matrix">
+        </div>
+
+        <div class="misclassified-texts">
+            <h2>Misclassified Texts</h2>
+            <table class="misclassified-table">
+                <thead>
+                    <tr>
+                        <th>Text</th>
+                        <th>Actual Sentiment</th>
+                        <th>Predicted Sentiment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in misclassified_texts.iterrows() %}
+                    <tr>
+                        <td>{{ row['Text'] }}</td>
+                        <td>{{ row['pred'] }}</td>
+                        <td>
+                            {% if row['sentiment_pred'] == 0 %}
+                                positive
+                            {% elif row['sentiment_pred'] == 1 %}
+                                negative
+                            {% elif row['sentiment_pred'] == 2 %}
+                                neutral
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}                    
+                </tbody>
+            </table>
+        </div>        
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Implemented by: Youssef Ahmed Hassan Zaki</p>
+        <p>Supervised by: Dr. Wael Zakaria</p>
+        <!-- Image in the footer -->
+        <img src="{{ url_for('static', filename='images/guc.png') }}" alt="Footer Image">
+    </footer>
+</body>
+</html>

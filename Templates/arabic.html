@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Sentiment Analysis</title>
+    <style>
+        body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        /* Center the header title */
+        .header {
+            text-align: center;
+            background-color: #007bff; /* Blue background color */
+            color: #fff; /* White text color */
+            padding: 20px 0; /* Add padding */
+            border-bottom: 2px solid #0056b3; /* Darker blue border */
+            position: relative; /* Position relative for absolute positioning of additional elements */
+        }
+
+        /* Style header title */
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase; /* Convert text to uppercase */
+            letter-spacing: 2px; /* Add letter spacing */
+            margin-bottom: 10px;
+        }
+
+        /* Additional elements under the title */
+        .additional-elements {
+            position: absolute;
+            left: 50%; /* Align to the middle of the header */
+            transform: translateX(-50%); /* Adjust horizontal alignment */
+            bottom: 0; /* Align to the bottom of the header */
+            margin-bottom: -10px;
+            display: flex; /* Use flexbox for horizontal alignment */
+        }
+
+        .additional-elements p {
+            margin-left: 20px; /* Add margin between elements */
+            color: #fff; /* White text color */
+            cursor: pointer; /* Add cursor pointer */
+        }
+
+        .additional-elements p:last-child {
+            margin-right: 0; /* Remove margin from the last element */
+        }
+
+        .additional-elements p:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Style container */
+        .container-wrapper {
+            display: flex;
+            justify-content: space-around; /* Distribute containers evenly */
+            margin-top: 110px;
+        }
+
+        .container {
+            flex: 0 1 30%; /* Flex-grow, flex-shrink, flex-basis */
+            text-align: center;
+            margin: 0 10px; /* Add margin between containers */
+            transform-style: preserve-3d; /* Preserve 3D transformations */
+            transition: transform 0.5s; /* Add transition for smooth effect */
+            perspective: 1000px; /* Perspective value for 3D effect */
+            background-color: #007bff; /* Blue background color */
+            border-radius: 8px; /* Add border radius for rounded corners */
+            overflow: hidden; /* Hide overflowing content */
+        }
+
+        /* Apply hover effect */
+        .container:hover {
+            transform: rotateX(10deg); /* Rotate the container on hover */
+        }
+
+        /* Style container inner elements */
+        .container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff; /* White text color */
+            padding: 10px; /* Add padding */
+            border-radius: 0 0 8px 8px; /* Add border radius for bottom corners */
+        }
+
+        .container textarea {
+            width: 80%;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            resize: none;
+        }
+
+        /* Style analyze button */
+        .analyze-button {
+            background-color: #28a745; /* Green background color */
+            color: #fff; /* White text color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        /* Hover effect for analyze button */
+        .analyze-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Style footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* Make footer take the whole width */
+            background-color: #f8f9fa; /* Light gray background color */
+            color: #343a40; /* Dark text color */
+            padding: 10px 20px; /* Add padding */
+            border-top: 1px solid #dee2e6; /* Light gray border top */
+            border-left: 1px solid #dee2e6; /* Light gray border left */
+            border-radius: 0; /* Remove border radius */
+        }
+
+        .sentiment {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        footer p {
+            margin: 5px 0; /* Add margin for spacing between paragraphs */
+        }
+
+        /* Style the image in the footer */
+        footer img {
+            position: absolute;
+            bottom: 10px;
+            right: 50px;
+            width: 50px; /* Adjust width as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Data Mining Techniques For Sentiment Analysis</h1>
+        <!-- Additional elements below the title -->
+        <div class="additional-elements">
+            <a href="/"><p>Home</p></a>
+            <a href="/csv.html"><p>Upload CSV File</p></a>
+            <a href="/english.html"><p>English Sentiment Analysis</p></a>
+            <a href="/arabic.html"><p>Arabic Sentiment Analysis</p></a>
+        </div>
+    </div>
+
+    <!-- Container Wrapper -->
+    <div class="container-wrapper">
+        <!-- Single Container -->
+        <div class="container">
+            <h2>Arabic Sentiment Analysis</h2>
+            <form id="sentiment-form" action="/analyzeArabic" method="post">
+                <textarea class="text-box" name="text" rows="4" cols="50" placeholder="أدخل النص"></textarea>
+                <button class="analyze-button" type="submit">تحليل</button>
+            </form>
+        </div>      
+    </div>
+
+     <!-- Sentiment Output -->
+    <div class="sentiment" id="sentiment-output"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Implemented by: Youssef Ahmed Hassan Zaki</p>
+        <p>Supervised by: Dr. Wael Zakaria</p>
+        <!-- Image in the footer -->
+        <img src="{{ url_for('static', filename='images/guc.png') }}" alt="Footer Image">
+    </footer>
+
+    <script>
+        document.getElementById("sentiment-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            var formData = new FormData(this); // Get form data
+            // Send POST request to /analyze endpoint
+            fetch("/analyzeArabic", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json()) // Parse response as JSON
+            .then(data => {
+                // Update sentiment output div with sentiment analysis result
+                document.getElementById("sentiment-output").innerHTML = `
+                    <p>Sentiment: ${data.sentiment.compound.toFixed(2)}</p>
+                `;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        });
+    </script>
+
+</body>
+</html>

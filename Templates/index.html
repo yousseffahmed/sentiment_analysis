@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mining Techniques For Sentiment Analysis</title>
+    <style>
+        body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        
+        /* Center the header title */
+        .header {
+            text-align: center;
+            background-color: #007bff; /* Blue background color */
+            color: #fff; /* White text color */
+            padding: 20px 0; /* Add padding */
+            border-bottom: 2px solid #0056b3; /* Darker blue border */
+            position: relative; /* Position relative for absolute positioning of additional elements */
+        }
+
+        /* Style header title */
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase; /* Convert text to uppercase */
+            letter-spacing: 2px; /* Add letter spacing */
+            margin-bottom: 10px;
+        }
+
+        /* Additional elements under the title */
+        .additional-elements {
+            position: absolute;
+            left: 50%; /* Align to the middle of the header */
+            transform: translateX(-50%); /* Adjust horizontal alignment */
+            bottom: 0; /* Align to the bottom of the header */
+            margin-bottom: -10px;
+            display: flex; /* Use flexbox for horizontal alignment */
+        }
+
+        .additional-elements p {
+            margin-left: 20px; /* Add margin between elements */
+            color: #fff; /* White text color */
+            cursor: pointer; /* Add cursor pointer */
+        }
+
+        .additional-elements p:last-child {
+            margin-right: 0; /* Remove margin from the last element */
+        }
+
+        .additional-elements p:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Style container */
+        .container-wrapper {
+            display: flex;
+            justify-content: space-around; /* Distribute containers evenly */
+            margin-top: 30px;
+        }
+
+        .container {
+            flex: 0 1 30%; /* Flex-grow, flex-shrink, flex-basis */
+            text-align: center;
+            margin: 0 10px; /* Add margin between containers */
+            transform-style: preserve-3d; /* Preserve 3D transformations */
+            transition: transform 0.5s; /* Add transition for smooth effect */
+            perspective: 1000px; /* Perspective value for 3D effect */
+            background-color: #007bff; /* Blue background color */
+            border-radius: 8px; /* Add border radius for rounded corners */
+            overflow: hidden; /* Hide overflowing content */
+        }
+
+        /* Apply hover effect */
+        .container:hover {
+            transform: rotateX(10deg); /* Rotate the container on hover */
+        }
+
+        /* Style container inner elements */
+        .container img {
+            width: 100%;
+            max-width: 200px; /* Limit maximum width of images */
+            height: auto;
+            margin-bottom: 10px; /* Move title below the image */
+            border-radius: 8px; /* Add border radius for rounded corners */
+        }
+
+        /* Style container title */
+        .container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            position: relative;
+            top: -30px; /* Adjust vertical position */
+            color: #fff; /* White text color */
+            padding: 10px; /* Add padding */
+            border-radius: 0 0 8px 8px; /* Add border radius for bottom corners */
+        }
+
+        /* Style footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* Make footer take the whole width */
+            background-color: #f8f9fa; /* Light gray background color */
+            color: #343a40; /* Dark text color */
+            padding: 10px 20px; /* Add padding */
+            border-top: 1px solid #dee2e6; /* Light gray border top */
+            border-left: 1px solid #dee2e6; /* Light gray border left */
+            border-radius: 0; /* Remove border radius */
+        }
+
+        footer p {
+            margin: 5px 0; /* Add margin for spacing between paragraphs */
+        }
+
+        /* Style the image in the footer */
+        footer img {
+            position: absolute;
+            bottom: 10px;
+            right: 50px;
+            width: 50px; /* Adjust width as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Data Mining Techniques For Sentiment Analysis</h1>
+        <!-- Additional elements below the title -->
+        <div class="additional-elements">
+            <a href="/"><p>Home</p></a>
+            <a href="/csv.html"><p>Upload CSV File</p></a>
+            <a href="/english.html"><p>English Sentiment Analysis</p></a>
+            <a href="/arabic.html"><p>Arabic Sentiment Analysis</p></a>
+        </div>
+    </div>
+
+    <!-- Container Wrapper -->
+    <div class="container-wrapper">
+        <!-- Container 1 -->
+        <div class="container">
+            <a href="csv.html">
+                <img src="{{ url_for('static', filename='images/download.png') }}" alt="Image 1">
+                <h2>Upload DataSet</h2>
+            </a>
+        </div>
+
+        <!-- Container 2 -->
+        <div class="container">
+            <a href="english.html">
+                <img src="{{ url_for('static', filename='images/english.png') }}" alt="Image 1">
+                <h2>English Sentiment Analysis</h2>
+            </a>
+        </div>
+
+        <!-- Container 3 -->
+        <div class="container">
+            <a href="arabic.html">
+                <img src="{{ url_for('static', filename='images/arabic.png') }}" alt="Image 1" style="margin-top: 60px;">
+                <h2 style="margin-top: 60px;">Arabic Sentiment Analysis</h2>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Implemented by: Youssef Ahmed Hassan Zaki</p>
+        <p>Supervised by: Dr. Wael Zakaria</p>
+        <!-- Image in the footer -->
+        <img src="{{ url_for('static', filename='images/guc.png') }}" alt="Footer Image">
+    </footer>
+</body>
+</html>
